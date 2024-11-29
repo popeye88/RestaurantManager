@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Create Ingredient</h1>
+    <form method="post" id="ingredient-formset">
+      {% csrf_token %}
+      {{ formset.management_form }}
+      <table class="table" id="formset-table">
+        <thead>
+        <tr>
+          <th>Ingredients</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for form in formset %}
+          <tr>
+            <td>
+              {% bootstrap_field form.name %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-secondary" id="add-more">Add More</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <a href="{% url 'kitchen:ingredient-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const addMoreButton = document.getElementById('add-more');
+          const formsetTable = document.getElementById('formset-table').getElementsByTagName('tbody')[0];
+          const totalForms = document.getElementById('id_form-TOTAL_FORMS');
+
+          addMoreButton.addEventListener('click', function () {
+              const currentFormCount = parseInt(totalForms.value);
+              const newFormCount = currentFormCount + 1;
+              const emptyRow = `
+        <tr>
+          <td>
+            <input type="text" name="form-${currentFormCount}-name" maxlength="255" class="form-control" id="id_form-${currentFormCount}-name">
+          </td>
+        </tr>
+      `;
+              formsetTable.insertAdjacentHTML('beforeend', emptyRow);
+              totalForms.value = newFormCount;
+          });
+      });
+  </script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>{{ view.object.pk|yesno:"Update Ingredient,Create Ingredient" }}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {% bootstrap_form form layout='vertical' %}
+      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+      <a href="{% url 'kitchen:ingredient-list' %}" class="btn btn-secondary mt-3">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
