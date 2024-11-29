@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="m-0">{{ title }}</h1>
+      {% if create_button %}
+        <a href="{% url create_path %}" class="btn btn-primary">
+          {{ create_button }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if search_form %}
+      {% include "includes/search.html" %}
+    {% endif %}
+
+    {% if dish_list %}
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Type</th>
+          <th>Cook(s)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for dish in dish_list %}
+          <tr>
+            <td>{{ dish.id }}</td>
+            <td>
+              <a href="{% url 'kitchen:dish-detail' pk=dish.pk %}">
+                {{ dish.name }}
+              </a>
+            </td>
+            <td>${{ dish.price }}</td>
+            <td>{{ dish.dish_type }}</td>
+            <td>
+              {% if dish.cooks.all %}
+                <ul class="list-unstyled mb-0">
+                  {% for cook in dish.cooks.all %}
+                    <li>
+                      <a href="{% url 'kitchen:cook-detail' pk=cook.id %}">
+                        {{ cook.username }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <span class="text-muted">No cooks assigned</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+      {% if is_paginated %}
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; First</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo; Previous</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">&laquo; First</span>
+              </li>
+              <li class="page-item disabled">
+                <span class="page-link">&lsaquo; Previous</span>
+              </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+              <span class="page-link">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+              </span>
+            </li>
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &rsaquo;</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Next &rsaquo;</span>
+              </li>
+              <li class="page-item disabled">
+                <span class="page-link">Last &raquo;</span>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+
+    {% else %}
+      <div class="alert alert-info" role="alert">
+        No dishes found.
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}

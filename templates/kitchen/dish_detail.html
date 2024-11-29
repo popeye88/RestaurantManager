@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+
+    <div class="mb-4">
+      <h1 class="display-4">{{ dish.name }}</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+
+        {% if dish.description %}
+          <div class="mb-4">
+            <h4><i class="fas fa-align-left"></i> Description</h4>
+            <p>{{ dish.description }}</p>
+          </div>
+        {% endif %}
+
+        {% if dish.dish_type %}
+          <div class="mb-4">
+            <h4><i class="fas fa-tag"></i> Type</h4>
+            <p>{{ dish.dish_type }}</p>
+          </div>
+        {% endif %}
+
+        {% if dish.price %}
+          <div class="mb-4">
+            <h4><i class="fas fa-dollar-sign"></i> Price</h4>
+            <p>${{ dish.price }}</p>
+          </div>
+        {% endif %}
+
+        <div class="mb-4">
+          <h4><i class="fas fa-carrot"></i> Ingredients</h4>
+          {% if dish.ingredients.all %}
+            <ul class="list-group">
+              {% for ingredient in dish.ingredients.all %}
+                <li class="list-group-item">{{ ingredient.name }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">No ingredients listed.</p>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h4><i class="fas fa-user-tie"></i> Cook(s)</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            {% if dish.cooks.all %}
+              {% for cook in dish.cooks.all %}
+                <li class="list-group-item">
+                  <a href="{% url 'kitchen:cook-detail' pk=cook.pk %}">
+                    {{ cook.first_name }} {{ cook.last_name }}
+                  </a>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="list-group-item text-muted">No cooks assigned.</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {% if control %}
+      <div class="mt-4">
+        <a href="{% url update_path pk=pk %}" class="btn btn-primary">Edit Dish</a>
+        <a href="{% url delete_path pk=pk %}" class="btn btn-danger">Delete Dish</a>
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}
