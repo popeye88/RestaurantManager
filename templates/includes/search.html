@@ -1,0 +1,11 @@
+{% load bootstrap4 %}
+
+<form class="row ">
+  <div class="col-auto">
+    {% bootstrap_form search_form %}
+  </div>
+
+  <div class="col-auto">
+    <input type="submit" value="🔎" class="btn btn-primary">
+    <a href="{{ request.path }}" class="btn btn-secondary">Reset</a></div>
+</form>
