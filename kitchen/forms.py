@@ -21,12 +21,8 @@ class SearchForm(forms.Form):
 def validate_experience_years(years_of_experience):
     if years_of_experience is not None and years_of_experience < 2:
         raise forms.ValidationError(
-            {
-                "years_of_experience": "Cook must "
-                "have at least 2 years of experience."
-            }
+            "Cook must have at least 2 years of experience."
         )
-
     return years_of_experience
 
 
@@ -36,6 +32,7 @@ class CookCreationForm(UserCreationForm):
         min_value=0,
         label="Years of Experience",
         help_text="Enter the number of years of experience.",
+        validators=[validate_experience_years],  # Добавлено
     )
 
     class Meta:
@@ -49,16 +46,19 @@ class CookCreationForm(UserCreationForm):
             "password2",
         ]
 
+    def clean_years_of_experience(self):
+        years = self.cleaned_data.get("years_of_experience")
+        return validate_experience_years(years)
+
 
 class CookExperienceUpdateForm(forms.ModelForm):
     class Meta:
         model = Cook
         fields = ["years_of_experience"]
 
-    def validate_experience_years(self):
-        return validate_experience_years(
-            self.cleaned_data["years_of_experience"]
-        )
+    def clean_years_of_experience(self):
+        years = self.cleaned_data.get("years_of_experience")
+        return validate_experience_years(years)
 
 
 class DishCreationForm(forms.ModelForm):

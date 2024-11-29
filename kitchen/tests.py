@@ -78,7 +78,7 @@ class CookCreationFormTest(TestCase):
                 "password2": "strongpassword123",
                 "first_name": "Gordon",
                 "last_name": "Ramsay",
-                "years_of_experience": -1,  # Некорректное значение
+                "years_of_experience": -1,
             }
         )
         self.assertFalse(form.is_valid())
