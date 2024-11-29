@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+
+    <div class="mb-4">
+      <h1 class="display-4">{{ cook.first_name }} {{ cook.last_name }}</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h4><i class="fas fa-user"></i> Cook Details</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>First Name:</strong> {{ cook.first_name }}
+            </li>
+            <li class="list-group-item">
+              <strong>Last Name:</strong> {{ cook.last_name }}
+            </li>
+            <li class="list-group-item">
+              <strong>Years of Experience:</strong> {{ cook.years_of_experience }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <h4><i class="fas fa-utensils"></i> Dishes</h4>
+        {% if cook.dishes.all %}
+          <div class="list-group">
+            {% for dish in cook.dishes.all %}
+              <a href="{% url 'kitchen:dish-detail' pk=dish.pk %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ dish.name }}</h5>
+                  <small>${{ dish.price }}</small>
+                </div>
+                <p class="mb-1 text-muted">Dish ID: {{ dish.id }}</p>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="alert alert-info mt-3" role="alert">
+            No dishes assigned to this cook.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if control %}
+      <div class="mt-4">
+        <a href="{% url 'kitchen:cook-update' pk=cook.pk %}" class="btn btn-primary">
+          <i class="fas fa-edit"></i> Edit Cook
+        </a>
+        <a href="{% url 'kitchen:cook-delete' pk=cook.pk %}" class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i> Delete Cook
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}
