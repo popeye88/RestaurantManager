@@ -6,17 +6,17 @@ from kitchen.views import (
     CookDetailView,
     CookListView,
     CookUpdateExperienceView,
-    dish_type_bulk_create,
     DishCreateView,
     DishDeleteView,
     DishDetailView,
     DishListView,
+    DishTypeBulkCreateView,
     DishTypeDeleteView,
     DishTypeListView,
     DishTypeUpdateView,
     DishUpdateView,
     index,
-    ingredient_bulk_create,
+    IngredientBulkCreateView,
     IngredientDeleteView,
     IngredientListView,
     IngredientUpdateView,
@@ -87,7 +87,7 @@ urlpatterns = [
     ),
     path(
         "dish-types/bulk-create/",
-        dish_type_bulk_create,
+        DishTypeBulkCreateView.as_view(),
         name="dish-type-bulk-create",
     ),
     path(
@@ -108,7 +108,7 @@ urlpatterns = [
     ),
     path(
         "ingredients/bulk-create/",
-        ingredient_bulk_create,
+        IngredientBulkCreateView.as_view(),
         name="ingredient-bulk-create",
     ),
     path(

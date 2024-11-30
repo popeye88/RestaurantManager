@@ -219,36 +219,42 @@ class IngredientListView(LoginRequiredMixin, generic.ListView):
         return super().get_queryset().prefetch_related("dishes__dish_type")
 
 
-def ingredient_bulk_create(request):
-    if request.method == "POST":
-        formset = IngredientFormSet(
+class IngredientBulkCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = "kitchen/ingredient_bulk_create.html"
+    formset_class = IngredientFormSet
+    success_url = "kitchen:ingredient-list"
+
+    def get(self, request, *args, **kwargs):
+        formset = self.formset_class(queryset=Ingredient.objects.none())
+        return render(request, self.template_name, {"formset": formset})
+
+    def post(self, request, *args, **kwargs):
+        formset = self.formset_class(
             request.POST, queryset=Ingredient.objects.none()
         )
         if formset.is_valid():
             formset.save()
-            return redirect("kitchen:ingredient-list")
-    else:
-        formset = IngredientFormSet(queryset=Ingredient.objects.none())
-
-    return render(
-        request, "kitchen/ingredient_bulk_create.html", {"formset": formset}
-    )
+            return redirect(self.success_url)
+        return render(request, self.template_name, {"formset": formset})
 
 
-def dish_type_bulk_create(request):
-    if request.method == "POST":
-        formset = DishTypeFormSet(
+class DishTypeBulkCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = "kitchen/dish_type_bulk_create.html"
+    formset_class = DishTypeFormSet
+    success_url = "kitchen:dish-type-list"
+
+    def get(self, request, *args, **kwargs):
+        formset = self.formset_class(queryset=DishType.objects.none())
+        return render(request, self.template_name, {"formset": formset})
+
+    def post(self, request, *args, **kwargs):
+        formset = self.formset_class(
             request.POST, queryset=DishType.objects.none()
         )
         if formset.is_valid():
             formset.save()
-            return redirect("kitchen:dish-type-list")
-    else:
-        formset = DishTypeFormSet(queryset=DishType.objects.none())
-
-    return render(
-        request, "kitchen/dish_type_bulk_create.html", {"formset": formset}
-    )
+            return redirect(self.success_url)
+        return render(request, self.template_name, {"formset": formset})
 
 
 class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
