@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Dish Types</h1>
+    <a href="{% url 'kitchen:dish-type-bulk-create' %}" class="btn btn-primary mb-3">Create Dish Type</a>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for dish_type in dish_type_list %}
+        <tr>
+          <td>{{ dish_type.name }}</td>
+          <td>
+            <a href="{% url 'kitchen:dish-type-update' dish_type.pk %}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{% url 'kitchen:dish-type-delete' dish_type.pk %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="2">No dish types available.</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
