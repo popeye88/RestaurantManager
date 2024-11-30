@@ -4,7 +4,7 @@ Django project for managing kitchen of the restaurant
 
 ## Check it out!
 
-[Restaurant manager deployed to Render]()
+[Restaurant manager deployed to Render](https://restaurantmanager-ux66.onrender.com)
 
 ## Instalation
 
