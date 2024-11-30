@@ -25,3 +25,8 @@ python manage.py runserver
 ## Demo
 
 ![Site screen](demo.png)
+
+## Testing
+
+* login: user
+* password: user12345
