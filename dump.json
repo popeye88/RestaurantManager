@@ -1,0 +1,98 @@
+[
+{
+    "model": "kitchen.dishtype",
+    "pk": 1,
+    "fields": {
+        "name": "TEST"
+    }
+},
+{
+    "model": "kitchen.dishtype",
+    "pk": 3,
+    "fields": {
+        "name": "TEST2"
+    }
+},
+{
+    "model": "kitchen.dishtype",
+    "pk": 4,
+    "fields": {
+        "name": "TEST3"
+    }
+},
+{
+    "model": "kitchen.cook",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$VYzfPvla2LSQ8sPIiE7dc2$LR0wFy6mXMVWK5VkMoHMgdSTZT1GnSTB2JtQMoiEE1A=",
+        "last_login": "2024-11-30T08:27:37.292Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@admin.admin",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-11-29T19:54:19.874Z",
+        "years_of_experience": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "kitchen.cook",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$YbJ1Jq8rbHueTzwqYW5BmH$uS5XcFp+2QsSFcpTlEFm5IKMNURYDRJ2hCtf9ByjGNY=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "test",
+        "first_name": "test1",
+        "last_name": "test2",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-11-29T20:05:03.422Z",
+        "years_of_experience": 2,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "kitchen.dish",
+    "pk": 1,
+    "fields": {
+        "name": "test",
+        "description": "test",
+        "price": "100.00",
+        "dish_type": 1,
+        "cooks": [
+            1
+        ]
+    }
+},
+{
+    "model": "kitchen.ingredient",
+    "pk": 1,
+    "fields": {
+        "name": "test",
+        "dishes": []
+    }
+},
+{
+    "model": "kitchen.ingredient",
+    "pk": 2,
+    "fields": {
+        "name": "test2",
+        "dishes": []
+    }
+},
+{
+    "model": "kitchen.ingredient",
+    "pk": 3,
+    "fields": {
+        "name": "test3",
+        "dishes": []
+    }
+}
+]
